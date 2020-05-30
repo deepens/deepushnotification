@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(helper),
             Text(
               '$title',
-             
+              style: Theme.of(context).textTheme.display1,
             ),
           ],
         ),
