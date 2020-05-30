@@ -32,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String title = "Title";
   String helper = "helper";
+  String userdata = "userdata";
 
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -44,14 +45,17 @@ class _MyHomePageState extends State<MyHomePage> {
       onMessage: (message) async{
         setState(() {
           title = message["notification"]["title"];
-          helper = "You have recieved a new notification";
+          helper = message["notification"]["body"];
+           userdata = message["data"]["key1"];
+          print(helper.toString());
         });
 
       },
       onResume: (message) async{
         setState(() {
-          title = message["data"]["title"];
-          helper = "You have open the application from notification";
+          title = message["notification"]["title"];
+          helper = message["notification"]["body"];
+          userdata = message["data"]["key1"];
         });
 
       },
@@ -84,9 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
          
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(helper),
+            Text('$helper'),
             Text(
               '$title',
+              style: Theme.of(context).textTheme.display1,
+            ),
+            Text(
+              '$userdata',
               style: Theme.of(context).textTheme.display1,
             ),
           ],
