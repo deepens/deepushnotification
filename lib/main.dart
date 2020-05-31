@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:async';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -33,14 +33,28 @@ class _MyHomePageState extends State<MyHomePage> {
   String title = "Title";
   String helper = "helper";
   String userdata = "userdata";
-
+String token = "";
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-
+gettoken() async{
+    
+      await _firebaseMessaging.getToken().then((_token){
+    setState(() {
+      //token = _token;
+    token= _token.toString();
+    });
+  });
+    
+    
+    
+     print("-----> $token");
+    //return useremail.toString();
+    
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    gettoken();
     _firebaseMessaging.configure(
       onMessage: (message) async{
         setState(() {
@@ -61,6 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
       },
 
     );
+
+   
   }
 
 
@@ -95,6 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$userdata',
+              style: Theme.of(context).textTheme.display1,
+            ),
+            Text(
+              '$token',
               style: Theme.of(context).textTheme.display1,
             ),
           ],
